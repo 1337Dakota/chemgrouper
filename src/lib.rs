@@ -41,35 +41,35 @@ impl Chemical {
         match self {
             Chemical::Base(_) => None,
             Chemical::Complex { deps, .. } => Some(deps.clone()),
-            Chemical::Maybe(_) => panic!("{}", FUCKERY_PANIC_MSG),
+            Chemical::Maybe(name) => panic!("{} [{}]", FUCKERY_PANIC_MSG, name),
         }
     }
     pub fn set_deps(&mut self, new: Vec<(Chemical, u32)>) {
         match self {
-            Chemical::Base(_) => panic!("{}", FUCKERY_PANIC_MSG),
+            Chemical::Base(name) => panic!("{} [{}]", FUCKERY_PANIC_MSG, name),
             Chemical::Complex { deps, .. } => *deps = new,
-            Chemical::Maybe(_) => panic!("{}", FUCKERY_PANIC_MSG),
+            Chemical::Maybe(name) => panic!("{} [{}]", FUCKERY_PANIC_MSG, name),
         }
     }
     pub fn reaction_temp(&self) -> Option<u32> {
         match self {
             Chemical::Base(_) => None,
             Chemical::Complex { reaction_temp, .. } => *reaction_temp,
-            Chemical::Maybe(_) => panic!("{}", FUCKERY_PANIC_MSG),
+            Chemical::Maybe(name) => panic!("{} [{}]", FUCKERY_PANIC_MSG, name),
         }
     }
     pub fn amount(&self) -> Option<u32> {
         match self {
             Chemical::Base(_) => None,
             Chemical::Complex { amount, .. } => Some(*amount),
-            Chemical::Maybe(_) => panic!("{}", FUCKERY_PANIC_MSG),
+            Chemical::Maybe(name) => panic!("{} [{}]", FUCKERY_PANIC_MSG, name),
         }
     }
     pub fn is_base(&self) -> bool {
         match self {
             Chemical::Base(_) => true,
             Chemical::Complex { .. } => false,
-            Chemical::Maybe(_) => panic!("{}", FUCKERY_PANIC_MSG),
+            Chemical::Maybe(name) => panic!("{} [{}]", FUCKERY_PANIC_MSG, name),
         }
     }
     pub fn is_maybe(&self) -> bool {
