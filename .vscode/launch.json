@@ -7,48 +7,10 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in library 'chemgrouper'",
-            "cargo": {
-                "args": [
-                    "test",
-                    "--no-run",
-                    "--lib",
-                    "--package=chemgrouper"
-                ],
-                "filter": {
-                    "name": "chemgrouper",
-                    "kind": "lib"
-                }
-            },
-            "args": [],
-            "cwd": "${workspaceFolder}"
-        },
-        {
-            "type": "lldb",
-            "request": "launch",
             "name": "Debug executable 'chemgrouper'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=chemgrouper",
-                    "--package=chemgrouper"
-                ],
-                "filter": {
-                    "name": "chemgrouper",
-                    "kind": "bin"
-                }
-            },
-            "args": [],
-            "cwd": "${workspaceFolder}"
-        },
-        {
-            "type": "lldb",
-            "request": "launch",
-            "name": "Debug unit tests in executable 'chemgrouper'",
-            "cargo": {
-                "args": [
-                    "test",
-                    "--no-run",
                     "--bin=chemgrouper",
                     "--package=chemgrouper"
                 ],
