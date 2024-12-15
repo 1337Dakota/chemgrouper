@@ -5,10 +5,15 @@ use chemgrouper::{build_graph, build_steps, parse_json};
 fn main() {
     let json = include_str!("../out.json");
     let versions = parse_json(json);
-    let selected_version = inquire::Select::new("Select Version", versions.keys().collect())
-        .prompt()
+    let mut options = versions.keys().collect::<Vec<&String>>();
+    options.sort();
+    let selected_version = inquire::Select::new("Select Version", options)
+        .prompt_skippable()
         .unwrap();
-    let chemicals = versions.get(selected_version).unwrap();
+    if selected_version.is_none() {
+        return;
+    }
+    let chemicals = versions.get(selected_version.unwrap()).unwrap();
     let choices: Vec<String> = chemicals.iter().map(|c| c.name()).collect();
     let arg_target = args().nth(1);
     if let Some(target) = arg_target {

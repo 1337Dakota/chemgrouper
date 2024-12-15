@@ -86,6 +86,48 @@ impl Chemical {
             Chemical::Maybe(_) => true,
         }
     }
+    pub fn contains_self(&self) -> bool {
+        match self {
+            Chemical::Base(_) => false,
+            Chemical::Complex { name, deps, .. } => {
+                deps.iter().any(|(c, _)| c.name() == *name)
+                    || deps.iter().any(|(c, _)| c.contains_self())
+            }
+            Chemical::Maybe(_) => false,
+        }
+    }
+
+    pub fn check_dirty(&self) -> bool {
+        match self {
+            Chemical::Base(_) => false,
+            Chemical::Complex { deps, .. } => deps.iter().any(|(dep, _)| dep.check_dirty()),
+            Chemical::Maybe(_) => true,
+        }
+    }
+
+    pub fn clean_deps(&self, chemicals: &Vec<Chemical>) -> Chemical {
+        match self {
+            Chemical::Base(_) => self.clone(),
+            Chemical::Complex { .. } => {
+                let mut parent = self.clone();
+                let mut new_deps = Vec::new();
+
+                for (dep, amount) in parent.deps().unwrap() {
+                    let dep = dep.clean_deps(chemicals);
+                    new_deps.push((dep, amount));
+                }
+                parent.set_deps(new_deps);
+                parent
+            }
+            Chemical::Maybe(_) => {
+                if let Some(target) = chemicals.iter().find(|v| v.name() == self.name()) {
+                    target.clone()
+                } else {
+                    Chemical::Base(self.name())
+                }
+            }
+        }
+    }
 }
 
 pub fn build_graph(target: Chemical) -> ChemGraph {
@@ -183,6 +225,8 @@ pub fn parse_json(json: &str) -> HashMap<String, Vec<Chemical>> {
     let parsed: JsonValue = json.parse().unwrap();
     let versions: &HashMap<String, JsonValue> = parsed.get().unwrap();
     for (name, version) in versions {
+        eprintln!("Processing {}", name);
+
         let mut inner_result = Vec::new();
         let array: &Vec<_> = version.get().unwrap();
 
@@ -216,42 +260,19 @@ pub fn parse_json(json: &str) -> HashMap<String, Vec<Chemical>> {
             inner_result.push(obj);
         }
 
-        while let Some(parent_pos) = inner_result.iter().position(|v| {
-            v.deps()
-                .is_some_and(|v2| v2.iter().any(|(c, _)| c.is_maybe()))
-        }) {
-            let mut parent = inner_result[parent_pos].clone();
-            let deps = parent.deps().unwrap();
-            let mut new_deps = deps.clone();
-            let offenders: Vec<&(Chemical, u32)> =
-                deps.iter().filter(|(c, _)| c.is_maybe()).collect();
-
-            for offender in offenders {
-                let dep_pos = deps
-                    .iter()
-                    .position(|(c, _)| c.name() == offender.0.name())
-                    .unwrap();
-                if let Some(target) = inner_result.iter().find(|v| v.name() == offender.0.name()) {
-                    new_deps[dep_pos].0 = target.clone();
-                } else {
-                    new_deps[dep_pos].0 = Chemical::Base(offender.0.name());
-                }
+        let mut new_result = Vec::new();
+        for parent in inner_result.clone() {
+            if parent.contains_self() {
+                continue;
             }
-            parent.set_deps(new_deps);
-            inner_result[parent_pos] = parent;
+            let mut parent = parent.clone();
+            while parent.check_dirty() {
+                parent = parent.clean_deps(&inner_result);
+            }
+            new_result.push(parent);
         }
 
-        result.insert(name.clone(), inner_result);
-    }
-
-    // Final check that is somehow needed???
-    if result.values().any(|vec| vec.iter().any(|c| c.is_maybe())) {
-        let why: Vec<_> = result
-            .values()
-            .filter(|vec| vec.iter().any(|c| c.is_maybe()))
-            .collect();
-        println!("{:#?}", why);
-        panic!("Something went very wrong (Some Chemicals are still a Chemical::Maybe, even after cleanup)");
+        result.insert(name.to_string(), new_result);
     }
 
     result
