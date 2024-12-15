@@ -2,7 +2,7 @@ use std::{collections::HashMap, fmt::Display};
 
 use petgraph::{
     graph::{DiGraph, NodeIndex},
-    visit::Bfs,
+    visit::Dfs,
     Direction::{Incoming, Outgoing},
 };
 use tinyjson::JsonValue;
@@ -30,6 +30,13 @@ impl Display for Chemical {
 const FUCKERY_PANIC_MSG: &str = "WHAT THE FUCK ARE YOU DOING???";
 
 impl Chemical {
+    pub fn into_base(self) -> Self {
+        match self {
+            Chemical::Base(_) => self,
+            Chemical::Complex { name, .. } => Chemical::Base(name),
+            Chemical::Maybe(name) => Chemical::Base(name),
+        }
+    }
     pub fn name(&self) -> String {
         match self {
             Chemical::Base(name) => name.clone(),
@@ -95,7 +102,7 @@ pub fn build_graph(target: Chemical) -> ChemGraph {
         .deps()
         .expect("Don't build a graph for a Base Chemical");
 
-    let root = graph.add_node(target);
+    let root = graph.add_node(target.into_base());
 
     add_deps(deps, root, &mut graph);
 
@@ -119,12 +126,12 @@ pub fn build_graph(target: Chemical) -> ChemGraph {
 
 pub fn build_steps(graph: ChemGraph) -> String {
     let root = graph.externals(Incoming).next().unwrap();
-    let mut bfs = Bfs::new(&graph, root);
+    let mut walker = Dfs::new(&graph, root);
     let mut result = Vec::new();
     let mut distances = HashMap::new();
     distances.insert(root, 0);
 
-    while let Some(node) = bfs.next(&graph) {
+    while let Some(node) = walker.next(&graph) {
         let current_distance = distances[&node];
         let sep = {
             if current_distance > 0 {
