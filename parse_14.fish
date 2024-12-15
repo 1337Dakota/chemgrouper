@@ -2,7 +2,7 @@
 
 set TARGETS "https://raw.githubusercontent.com/space-wizards/space-station-14/refs/heads/master/Resources/Prototypes/Recipes/Reactions/chemicals.yml" "https://raw.githubusercontent.com/space-wizards/space-station-14/refs/heads/master/Resources/Prototypes/Recipes/Reactions/cleaning.yml" "https://raw.githubusercontent.com/space-wizards/space-station-14/refs/heads/master/Resources/Prototypes/Recipes/Reactions/fun.yml" "https://raw.githubusercontent.com/space-wizards/space-station-14/refs/heads/master/Resources/Prototypes/Recipes/Reactions/medicine.yml" "https://raw.githubusercontent.com/space-wizards/space-station-14/refs/heads/master/Resources/Prototypes/Recipes/Reactions/pyrotechnic.yml"
 #set TARGETS "https://raw.githubusercontent.com/space-wizards/space-station-14/refs/heads/master/Resources/Prototypes/Recipes/Reactions/pyrotechnic.yml"
-set OUT_FILE out.json
+set OUT_FILE out_14.json
 set TEMP_FILE tmp
 
 for target in $TARGETS
