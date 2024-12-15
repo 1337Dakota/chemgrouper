@@ -1,0 +1,882 @@
+[
+    {
+        "name": "Ammonia",
+        "deps": {
+            "Hydrogen": 3,
+            "Nitrogen": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Diethylamine",
+        "deps": {
+            "Ammonia": 1,
+            "Ethanol": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Phenol",
+        "deps": {
+            "Hydroxide": 1,
+            "Benzene": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Acetone",
+        "deps": {
+            "Oil": 1,
+            "WeldingFuel": 1,
+            "Oxygen": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "FoamingAgent",
+        "deps": {
+            "Lithium": 1,
+            "Hydrogen": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "PolytrinicAcid",
+        "deps": {
+            "SulfuricAcid": 1,
+            "Plasma": 1,
+            "Potassium": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "SulfuricAcid",
+        "deps": {
+            "Hydrogen": 1,
+            "Sulfur": 1,
+            "Oxygen": 2
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "FluorosulfuricAcid",
+        "deps": {
+            "Fluorine": 1,
+            "Hydrogen": 1,
+            "Potassium": 1,
+            "SulfuricAcid": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "TableSalt",
+        "deps": {
+            "Chlorine": 1,
+            "Sodium": 1
+        },
+        "reaction_temp": 370
+    },
+    {
+        "name": "Thermite",
+        "deps": {
+            "Iron": 1,
+            "Aluminium": 1,
+            "Oxygen": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "UnstableMutagen",
+        "deps": {
+            "Radium": 1,
+            "Phosphorus": 1,
+            "Chlorine": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Oil",
+        "deps": {
+            "WeldingFuel": 1,
+            "Hydrogen": 1,
+            "Carbon": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Fluorosurfactant",
+        "deps": {
+            "Carbon": 2,
+            "Fluorine": 2,
+            "SulfuricAcid": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Desoxyephedrine",
+        "deps": {
+            "Ephedrine": 1,
+            "Carbon": 1,
+            "Iodine": 1,
+            "Phosphorus": 1
+        },
+        "reaction_temp": 370
+    },
+    {
+        "name": "Stimulants",
+        "deps": {
+            "Ephedrine": 1,
+            "Vestine": 1,
+            "Oxygen": 2
+        },
+        "reaction_temp": 370
+    },
+    {
+        "name": "Ephedrine",
+        "deps": {
+            "Oil": 1,
+            "Hydrogen": 1,
+            "Sugar": 1,
+            "Diethylamine": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "MuteToxin",
+        "deps": {
+            "Uranium": 1,
+            "Vestine": 2,
+            "SpaceGlue": 2
+        },
+        "reaction_temp": 370
+    },
+    {
+        "name": "ChloralHydrate",
+        "deps": {
+            "Chlorine": 3,
+            "Ethanol": 1,
+            "Water": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Pax",
+        "deps": {
+            "MindbreakerToxin": 1,
+            "Synaptizine": 1,
+            "Water": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Charcoal",
+        "deps": {
+            "Carbon": 1,
+            "Ash": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "NorepinephricAcid",
+        "deps": {
+            "Uranium": 1,
+            "Epinephrine": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Ethyloxyephedrine",
+        "deps": {
+            "Desoxyephedrine": 1,
+            "Stellibinin": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Diphenylmethylamine",
+        "deps": {
+            "Ethyloxyephedrine": 1,
+            "SodiumCarbonate": 1,
+            "Coffee": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "SodiumCarbonate",
+        "deps": {
+            "Ammonia": 1,
+            "TableSalt": 1,
+            "Carbon": 1,
+            "Oxygen": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Benzene",
+        "deps": {
+            "Hydrogen": 1,
+            "Carbon": 1
+        },
+        "reaction_temp": 310
+    },
+    {
+        "name": "Hydroxide",
+        "deps": {
+            "Oxygen": 1,
+            "Hydrogen": 1
+        },
+        "reaction_temp": 310
+    },
+    {
+        "name": "SodiumHydroxide",
+        "deps": {
+            "Hydroxide": 1,
+            "Sodium": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Fersilicite",
+        "deps": {
+            "Iron": 1,
+            "Silicon": 1
+        },
+        "reaction_temp": 310
+    },
+    {
+        "name": "SodiumPolyacrylate",
+        "deps": {
+            "Oxygen": 2,
+            "Sodium": 1,
+            "Nitrogen": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Nocturine",
+        "deps": {
+            "Impedrezene": 2,
+            "Vestine": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Tazinide",
+        "deps": {
+            "Licoxide": 1,
+            "Vestine": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Bleach",
+        "deps": {
+            "TableSalt": 2,
+            "SpaceCleaner": 2,
+            "SodiumHydroxide": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "AmmoniaFromBlood",
+        "deps": {
+            "AmmoniaBlood": 2
+        },
+        "reaction_temp": 370
+    },
+    {
+        "name": "SpaceCleaner",
+        "deps": {
+            "Ammonia": 1,
+            "Water": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "SpaceLube",
+        "deps": {
+            "Water": 1,
+            "Fersilicite": 1,
+            "Oxygen": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Carpetium",
+        "deps": {
+            "SpaceDrugs": 1,
+            "Fiber": 2
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "BuzzochloricBees",
+        "deps": {
+            "Saxoite": 1,
+            "Fiber": 1,
+            "GroundBee": 1,
+            "Chlorine": 1,
+            "UnstableMutagen": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "SpaceGlue",
+        "deps": {
+            "SpaceLube": 1,
+            "Slime": 1
+        },
+        "reaction_temp": 370
+    },
+    {
+        "name": "Licoxide",
+        "deps": {
+            "Lead": 1,
+            "Zinc": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "FlashFreezeIce",
+        "deps": {
+            "Fresium": 1,
+            "Water": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Fresium",
+        "deps": {
+            "Frezon": 3,
+            "Plasma": 1,
+            "Nitrogen": 2,
+            "Cryoxadone": 0.22,
+            "TableSalt": 0.08,
+            "Water": 1.5
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Laughter",
+        "deps": {
+            "JuiceBanana": 1,
+            "Sugar": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Dylovene",
+        "deps": {
+            "Silicon": 1,
+            "Nitrogen": 1,
+            "Potassium": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Ethylredoxrazine",
+        "deps": {
+            "Oxygen": 1,
+            "Dylovene": 1,
+            "Carbon": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Cryptobiolin",
+        "deps": {
+            "Potassium": 1,
+            "Oxygen": 1,
+            "Sugar": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Arithrazine",
+        "deps": {
+            "Hyronalin": 1,
+            "Hydrogen": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Bicaridine",
+        "deps": {
+            "Inaprovaline": 1,
+            "Carbon": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Cryoxadone",
+        "deps": {
+            "Dexalin": 1,
+            "Water": 1,
+            "Oxygen": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Doxarubixadone",
+        "deps": {
+            "Cryoxadone": 1,
+            "UnstableMutagen": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Epinephrine",
+        "deps": {
+            "Phenol": 1,
+            "Acetone": 1,
+            "Chlorine": 1,
+            "Hydroxide": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Dermaline",
+        "deps": {
+            "Kelotane": 1,
+            "Oxygen": 1,
+            "Phosphorus": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Dexalin",
+        "deps": {
+            "Oxygen": 2,
+            "Plasma": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "DexalinPlus",
+        "deps": {
+            "Dexalin": 1,
+            "Carbon": 1,
+            "Iron": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Hyronalin",
+        "deps": {
+            "Radium": 1,
+            "Dylovene": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Inaprovaline",
+        "deps": {
+            "Oxygen": 1,
+            "Carbon": 1,
+            "Sugar": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Ipecac",
+        "deps": {
+            "Potassium": 1,
+            "Nitrogen": 1,
+            "Ammonia": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "TranexamicAcid",
+        "deps": {
+            "Inaprovaline": 1,
+            "SulfuricAcid": 1,
+            "Sugar": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Kelotane",
+        "deps": {
+            "Silicon": 1,
+            "Carbon": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Leporazine",
+        "deps": {
+            "Copper": 1,
+            "Fersilicite": 1,
+            "Plasma": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Phalanximine",
+        "deps": {
+            "Hyronalin": 1,
+            "Ethanol": 1,
+            "UnstableMutagen": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Ambuzol",
+        "deps": {
+            "Dylovene": 1,
+            "Ammonia": 1,
+            "ZombieBlood": 2
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "AmbuzolPlus",
+        "deps": {
+            "Ambuzol": 5,
+            "Omnizine": 5
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Synaptizine",
+        "deps": {
+            "Lithium": 1,
+            "Sugar": 1,
+            "Water": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Tricordrazine",
+        "deps": {
+            "Inaprovaline": 1,
+            "Dylovene": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "HeartbreakerToxin",
+        "deps": {
+            "DexalinPlus": 1,
+            "MindbreakerToxin": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Impedrezene",
+        "deps": {
+            "Mercury": 1,
+            "Oxygen": 1,
+            "Water": 1
+        },
+        "reaction_temp": 370
+    },
+    {
+        "name": "Lexorin",
+        "deps": {
+            "HeartbreakerToxin": 1,
+            "Plasma": 1,
+            "Vestine": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Lipozine",
+        "deps": {
+            "TableSalt": 1,
+            "Ethanol": 1,
+            "Radium": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Mannitol",
+        "deps": {
+            "Hydrogen": 1,
+            "Water": 1,
+            "Sugar": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "MindbreakerToxin",
+        "deps": {
+            "Silicon": 1,
+            "Hydrogen": 1,
+            "Dylovene": 1
+        },
+        "reaction_temp": 370
+    },
+    {
+        "name": "SpaceDrugs",
+        "deps": {
+            "Mercury": 1,
+            "Sugar": 1,
+            "Lithium": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Ultravasculine",
+        "deps": {
+            "Histamine": 2,
+            "Plasma": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Oculine",
+        "deps": {
+            "TableSalt": 1,
+            "Blood": 1,
+            "Hydroxide": 2
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Siderlac",
+        "deps": {
+            "Aloe": 1,
+            "Stellibinin": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Cognizine",
+        "deps": {
+            "CarpoToxin": 1,
+            "Siderlac": 1,
+            "Acetone": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Sigynate",
+        "deps": {
+            "SodiumCarbonate": 1,
+            "SodiumHydroxide": 1,
+            "Kelotane": 1,
+            "Water": 1,
+            "Sugar": 1
+        },
+        "reaction_temp": 370
+    },
+    {
+        "name": "Saline",
+        "deps": {
+            "Water": 4,
+            "TableSalt": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Lacerinol",
+        "deps": {
+            "Bicaridine": 1,
+            "Benzene": 1
+        },
+        "reaction_temp": 335
+    },
+    {
+        "name": "Puncturase",
+        "deps": {
+            "Bicaridine": 1,
+            "Hydroxide": 1
+        },
+        "reaction_temp": 325
+    },
+    {
+        "name": "Bruizine",
+        "deps": {
+            "Bicaridine": 1,
+            "Lithium": 0.9,
+            "Sugar": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "BicarLacerinol",
+        "deps": {
+            "Lacerinol": 1,
+            "Bicaridine": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "BicarPuncturase",
+        "deps": {
+            "Puncturase": 1,
+            "Bicaridine": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "BicarBruizine",
+        "deps": {
+            "Bruizine": 1,
+            "Bicaridine": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "BruizineLacerinol",
+        "deps": {
+            "Lacerinol": 1,
+            "Bruizine": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "BruizinePuncturase",
+        "deps": {
+            "Puncturase": 1,
+            "Bruizine": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "PuncturaseLacerinol",
+        "deps": {
+            "Lacerinol": 1,
+            "Puncturase": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Diphenhydramine",
+        "deps": {
+            "Diethylamine": 1,
+            "Oil": 1,
+            "TableSalt": 1,
+            "Carbon": 1,
+            "Ethanol": 1
+        },
+        "reaction_temp": 377.59
+    },
+    {
+        "name": "Pyrazine",
+        "deps": {
+            "Leporazine": 1,
+            "Dermaline": 1,
+            "Carbon": 1
+        },
+        "reaction_temp": 540
+    },
+    {
+        "name": "Insuzine",
+        "deps": {
+            "Leporazine": 1,
+            "Kelotane": 1,
+            "Silicon": 1
+        },
+        "reaction_temp": 433
+    },
+    {
+        "name": "Opporozidone",
+        "deps": {
+            "Cognizine": 1,
+            "Plasma": 2,
+            "Doxarubixadone": 1
+        },
+        "reaction_temp": 400
+    },
+    {
+        "name": "Necrosol",
+        "deps": {
+            "Blood": 3,
+            "Omnizine": 1,
+            "Cryoxadone": 2
+        },
+        "reaction_temp": 370
+    },
+    {
+        "name": "Aloxadone",
+        "deps": {
+            "Cryoxadone": 1,
+            "Aloe": 2,
+            "Sigynate": 2
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Psicodine",
+        "deps": {
+            "Mannitol": 2,
+            "Impedrezene": 1,
+            "Water": 2
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Lipolicide",
+        "deps": {
+            "Ephedrine": 1,
+            "Diethylamine": 1,
+            "Mercury": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Happiness",
+        "deps": {
+            "Laughter": 2,
+            "Epinephrine": 1,
+            "Ethanol": 1,
+            "Plasma": 5
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "PotassiumIodide",
+        "deps": {
+            "Potassium": 1,
+            "Iodine": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Haloperidol",
+        "deps": {
+            "Aluminium": 1,
+            "Chlorine": 1,
+            "Fluorine": 1,
+            "Oil": 1,
+            "PotassiumIodide": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Napalm",
+        "deps": {
+            "Oil": 1,
+            "WeldingFuel": 1,
+            "Ethanol": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "Phlogiston",
+        "deps": {
+            "Phosphorus": 1,
+            "SulfuricAcid": 1,
+            "Plasma": 1
+        },
+        "reaction_temp": null
+    },
+    {
+        "name": "ChlorineTrifluoride",
+        "deps": {
+            "Chlorine": 1,
+            "Fluorine": 3
+        },
+        "reaction_temp": 370
+    },
+    {
+        "name": "Ash",
+        "deps": {
+            "Oil": 1
+        },
+        "reaction_temp": 520
+    }
+]
