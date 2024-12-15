@@ -9,3 +9,10 @@ edition = "2021"
 inquire = "0.7.5"
 petgraph = "0.6.5"
 tinyjson = "2.5.1"
+
+[dev-dependencies]
+divan = "0.1.16"
+
+[[bench]]
+name = "bench"
+harness = false
