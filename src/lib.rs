@@ -225,8 +225,6 @@ pub fn parse_json(json: &str) -> HashMap<String, Vec<Chemical>> {
     let parsed: JsonValue = json.parse().unwrap();
     let versions: &HashMap<String, JsonValue> = parsed.get().unwrap();
     for (name, version) in versions {
-        eprintln!("Processing {}", name);
-
         let mut inner_result = Vec::new();
         let array: &Vec<_> = version.get().unwrap();
 
