@@ -16,6 +16,7 @@ pub enum Chemical {
         name: String,
         deps: Vec<(Chemical, u32)>,
         reaction_temp: Option<u32>,
+        amount: u32,
     },
     Maybe(String), // Fuck parsing JSON
 }
@@ -54,6 +55,13 @@ impl Chemical {
         match self {
             Chemical::Base(_) => None,
             Chemical::Complex { reaction_temp, .. } => *reaction_temp,
+            Chemical::Maybe(_) => panic!("{}", FUCKERY_PANIC_MSG),
+        }
+    }
+    pub fn amount(&self) -> Option<u32> {
+        match self {
+            Chemical::Base(_) => None,
+            Chemical::Complex { amount, .. } => Some(*amount),
             Chemical::Maybe(_) => panic!("{}", FUCKERY_PANIC_MSG),
         }
     }
@@ -118,8 +126,20 @@ pub fn build_steps(graph: ChemGraph) -> String {
 
     while let Some(node) = bfs.next(&graph) {
         let current_distance = distances[&node];
-        let sep = " ".repeat(current_distance * 4);
+        let sep = {
+            if current_distance > 0 {
+                ("|".to_owned() + "   ").repeat(current_distance)
+            } else {
+                "".to_owned()
+            }
+        };
         let chemical = graph.node_weight(node).unwrap();
+        let multiplier = chemical.amount().unwrap_or(1);
+        let multiplier_format = if node == root || chemical.is_base() {
+            "".to_owned()
+        } else {
+            format!("[{multiplier}]")
+        };
         for neighbor in graph.neighbors_directed(node, Outgoing) {
             // If neighbor hasn't been visited, calculate its distance
             distances
@@ -130,7 +150,7 @@ pub fn build_steps(graph: ChemGraph) -> String {
         let name = chemical.name();
         let parts = {
             if node == root {
-                1u32
+                multiplier
             } else {
                 let parent = graph.neighbors_directed(node, Incoming).next().unwrap();
                 let edge = graph.find_edge(parent, node).unwrap();
@@ -138,7 +158,7 @@ pub fn build_steps(graph: ChemGraph) -> String {
             }
         };
 
-        result.push(format!("{sep}{parts} parts of {name}"));
+        result.push(format!("{sep}{parts} parts of {name} {multiplier_format}"));
     }
 
     result.join("\n")
@@ -170,10 +190,17 @@ pub fn parse_json(json: &str) -> Vec<Chemical> {
             .collect();
         let reaction_temp: Option<&f64> = chemical.get("reaction_temp").unwrap().get();
         let reaction_temp = reaction_temp.map(|v| *v as u32);
+        let amount: u32 = *chemical
+            .get("amount")
+            .unwrap()
+            .get::<f64>()
+            .unwrap()//_or(&deps.iter().fold(0f64, |acc, (_, a)| acc + *a as f64))
+            as u32;
         let obj = Chemical::Complex {
             name: name.to_string(),
             deps,
             reaction_temp,
+            amount,
         };
 
         result.push(obj);

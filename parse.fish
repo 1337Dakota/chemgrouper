@@ -14,6 +14,7 @@ sd "$(echo -e "\xEF\xBB\xBF")" '' $TEMP_FILE
 yq --indent 4 '[.[] | select(.source == null and .products != null) | {
         "name": .id,
         "deps": (.reactants | to_entries | map({key: .key, value: .value.amount}) | from_entries),
-        "reaction_temp": .minTemp}]' $TEMP_FILE > $OUT_FILE
+        "reaction_temp": .minTemp,
+        "amount": (.products[.id] // empty)}]' $TEMP_FILE > $OUT_FILE
 
 rm $TEMP_FILE
