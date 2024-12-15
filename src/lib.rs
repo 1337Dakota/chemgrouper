@@ -206,28 +206,40 @@ pub fn parse_json(json: &str) -> Vec<Chemical> {
         result.push(obj);
     }
 
-    while let Some(parent_pos) = result.iter().position(|v| {
-        v.deps()
-            .is_some_and(|v2| v2.iter().any(|(c, _)| c.is_maybe()))
-    }) {
-        let mut parent = result[parent_pos].clone();
-        let deps = parent.deps().unwrap();
-        let mut new_deps = deps.clone();
-        let offenders: Vec<&(Chemical, u32)> = deps.iter().filter(|(c, _)| c.is_maybe()).collect();
-
-        for offender in offenders {
-            let dep_pos = deps
-                .iter()
-                .position(|(c, _)| c.name() == offender.0.name())
-                .unwrap();
-            if let Some(target) = result.iter().find(|v| v.name() == offender.0.name()) {
-                new_deps[dep_pos].0 = target.clone();
-            } else {
-                new_deps[dep_pos].0 = Chemical::Base(offender.0.name());
-            }
+    fn check_dirty(target: Chemical) -> bool {
+        match target {
+            Chemical::Base(_) => false,
+            Chemical::Complex { deps, .. } => deps.iter().any(|(dep, _)| check_dirty(dep.clone())),
+            Chemical::Maybe(_) => true,
         }
-        parent.set_deps(new_deps);
-        result[parent_pos] = parent;
+    }
+
+    fn clean_deps(parent: Chemical, chemicals: Vec<Chemical>) -> Chemical {
+        if parent.is_maybe() {
+            if let Some(target) = chemicals.iter().find(|v| v.name() == parent.name()) {
+                target.clone()
+            } else {
+                Chemical::Base(parent.name())
+            }
+        } else if !parent.is_base() {
+            let mut parent = parent.clone();
+
+            let mut new_deps = Vec::new();
+            for (dep, amount) in parent.deps().unwrap_or_default() {
+                let dep = clean_deps(dep, chemicals.clone());
+                new_deps.push((dep, amount));
+            }
+            parent.set_deps(new_deps);
+            parent
+        } else {
+            parent
+        }
+    }
+
+    while let Some(pos) = result.iter().position(|chem| check_dirty(chem.clone())) {
+        let parent = result[pos].clone();
+        let parent = clean_deps(parent, result.clone());
+        result[pos] = parent
     }
 
     result
