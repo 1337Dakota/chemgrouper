@@ -4,7 +4,11 @@ use chemgrouper::{build_graph, build_steps, parse_json};
 
 fn main() {
     let json = include_str!("../out.json");
-    let chemicals = parse_json(json);
+    let versions = parse_json(json);
+    let selected_version = inquire::Select::new("Select Version", versions.keys().collect())
+        .prompt()
+        .unwrap();
+    let chemicals = versions.get(selected_version).unwrap();
     let choices: Vec<String> = chemicals.iter().map(|c| c.name()).collect();
     let arg_target = args().nth(1);
     if let Some(target) = arg_target {

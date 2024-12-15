@@ -178,75 +178,80 @@ pub fn build_steps(graph: ChemGraph) -> String {
 // Dont refactor it
 // It's not worth the mental pain
 // It works and that's all that matters
-pub fn parse_json(json: &str) -> Vec<Chemical> {
-    let mut result = Vec::new();
+pub fn parse_json(json: &str) -> HashMap<String, Vec<Chemical>> {
+    let mut result = HashMap::new();
     let parsed: JsonValue = json.parse().unwrap();
-    let array: &Vec<_> = parsed.get().unwrap();
+    let versions: &HashMap<String, JsonValue> = parsed.get().unwrap();
+    for (name, version) in versions {
+        let mut inner_result = Vec::new();
+        let array: &Vec<_> = version.get().unwrap();
 
-    for chemical in array {
-        let chemical: &HashMap<_, _> = chemical.get().unwrap();
-        let name: &String = chemical.get("name").unwrap().get().unwrap();
-        let deps: &HashMap<String, JsonValue> = chemical.get("deps").unwrap().get().unwrap();
-        let deps: HashMap<&String, u32> = deps
-            .iter()
-            .map(|(k, v)| (k, *v.get::<f64>().unwrap() as u32))
-            .collect();
-        let deps: Vec<(Chemical, u32)> = deps
-            .iter()
-            .map(|(key, &value)| (Chemical::Maybe(key.to_string()), value))
-            .collect();
-        let reaction_temp: Option<&f64> = chemical.get("reaction_temp").unwrap().get();
-        let reaction_temp = reaction_temp.map(|v| *v as u32);
-        let amount: u32 = *chemical
-            .get("amount")
-            .unwrap()
-            .get::<f64>()
-            .unwrap()//_or(&deps.iter().fold(0f64, |acc, (_, a)| acc + *a as f64))
-            as u32;
-        let obj = Chemical::Complex {
-            name: name.to_string(),
-            deps,
-            reaction_temp,
-            amount,
-        };
+        for chemical in array {
+            let chemical: &HashMap<_, _> = chemical.get().unwrap();
+            let name: &String = chemical.get("name").unwrap().get().unwrap();
+            let deps: &HashMap<String, JsonValue> = chemical.get("deps").unwrap().get().unwrap();
+            let deps: HashMap<&String, u32> = deps
+                .iter()
+                .map(|(k, v)| (k, *v.get::<f64>().unwrap() as u32))
+                .collect();
+            let deps: Vec<(Chemical, u32)> = deps
+                .iter()
+                .map(|(key, &value)| (Chemical::Maybe(key.to_string()), value))
+                .collect();
+            let reaction_temp: Option<&f64> = chemical.get("reaction_temp").unwrap().get();
+            let reaction_temp = reaction_temp.map(|v| *v as u32);
+            let amount: u32 = *chemical
+                .get("amount")
+                .unwrap()
+                .get::<f64>()
+                .unwrap()//_or(&deps.iter().fold(0f64, |acc, (_, a)| acc + *a as f64))
+                as u32;
+            let obj = Chemical::Complex {
+                name: name.to_string(),
+                deps,
+                reaction_temp,
+                amount,
+            };
 
-        result.push(obj);
-    }
-
-    fn check_dirty(target: Chemical) -> bool {
-        match target {
-            Chemical::Base(_) => false,
-            Chemical::Complex { deps, .. } => deps.iter().any(|(dep, _)| check_dirty(dep.clone())),
-            Chemical::Maybe(_) => true,
+            inner_result.push(obj);
         }
-    }
 
-    fn clean_deps(parent: Chemical, chemicals: Vec<Chemical>) -> Chemical {
-        if parent.is_maybe() {
-            if let Some(target) = chemicals.iter().find(|v| v.name() == parent.name()) {
-                target.clone()
-            } else {
-                Chemical::Base(parent.name())
-            }
-        } else if !parent.is_base() {
-            let mut parent = parent.clone();
+        while let Some(parent_pos) = inner_result.iter().position(|v| {
+            v.deps()
+                .is_some_and(|v2| v2.iter().any(|(c, _)| c.is_maybe()))
+        }) {
+            let mut parent = inner_result[parent_pos].clone();
+            let deps = parent.deps().unwrap();
+            let mut new_deps = deps.clone();
+            let offenders: Vec<&(Chemical, u32)> =
+                deps.iter().filter(|(c, _)| c.is_maybe()).collect();
 
-            let mut new_deps = Vec::new();
-            for (dep, amount) in parent.deps().unwrap_or_default() {
-                let dep = clean_deps(dep, chemicals.clone());
-                new_deps.push((dep, amount));
+            for offender in offenders {
+                let dep_pos = deps
+                    .iter()
+                    .position(|(c, _)| c.name() == offender.0.name())
+                    .unwrap();
+                if let Some(target) = inner_result.iter().find(|v| v.name() == offender.0.name()) {
+                    new_deps[dep_pos].0 = target.clone();
+                } else {
+                    new_deps[dep_pos].0 = Chemical::Base(offender.0.name());
+                }
             }
             parent.set_deps(new_deps);
-            parent
-        } else {
-            parent
+            inner_result[parent_pos] = parent;
         }
+
+        result.insert(name.clone(), inner_result);
     }
 
-    while let Some(pos) = result.iter().position(|chem| check_dirty(chem.clone())) {
-        let parent = result[pos].clone();
-        let parent = clean_deps(parent, result.clone());
-        result[pos] = parent
+    // Final check that is somehow needed???
+    if result.values().any(|vec| vec.iter().any(|c| c.is_maybe())) {
+        let why: Vec<_> = result
+            .values()
+            .filter(|vec| vec.iter().any(|c| c.is_maybe()))
+            .collect();
+        println!("{:#?}", why);
+        panic!("Something went very wrong (Some Chemicals are still a Chemical::Maybe, even after cleanup)");
     }
 
     result
