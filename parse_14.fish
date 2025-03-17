@@ -1,12 +1,25 @@
 #!/usr/bin/fish
 
-set TARGETS "https://raw.githubusercontent.com/space-wizards/space-station-14/refs/heads/master/Resources/Prototypes/Recipes/Reactions/chemicals.yml" "https://raw.githubusercontent.com/space-wizards/space-station-14/refs/heads/master/Resources/Prototypes/Recipes/Reactions/cleaning.yml" "https://raw.githubusercontent.com/space-wizards/space-station-14/refs/heads/master/Resources/Prototypes/Recipes/Reactions/fun.yml" "https://raw.githubusercontent.com/space-wizards/space-station-14/refs/heads/master/Resources/Prototypes/Recipes/Reactions/medicine.yml" "https://raw.githubusercontent.com/space-wizards/space-station-14/refs/heads/master/Resources/Prototypes/Recipes/Reactions/pyrotechnic.yml"
-#set TARGETS "https://raw.githubusercontent.com/space-wizards/space-station-14/refs/heads/master/Resources/Prototypes/Recipes/Reactions/pyrotechnic.yml"
+set REPO "space-wizards/space-station-14"
+if test (count $argv) -ge 1
+    set REPO $argv[1]
+end
+
+set ADDITIONALS $argv[2..-1]
+
+set TARGETS "https://raw.githubusercontent.com/$REPO/refs/heads/master/Resources/Prototypes/Recipes/Reactions/chemicals.yml" "https://raw.githubusercontent.com/$REPO/refs/heads/master/Resources/Prototypes/Recipes/Reactions/cleaning.yml" "https://raw.githubusercontent.com/$REPO/refs/heads/master/Resources/Prototypes/Recipes/Reactions/fun.yml" "https://raw.githubusercontent.com/$REPO/refs/heads/master/Resources/Prototypes/Recipes/Reactions/medicine.yml" "https://raw.githubusercontent.com/$REPO/refs/heads/master/Resources/Prototypes/Recipes/Reactions/pyrotechnic.yml"
+
 set OUT_FILE out_14.json
 set TEMP_FILE tmp
 
 for target in $TARGETS
     wget -q -O - "$target" >> $TEMP_FILE
+    echo "" >> $TEMP_FILE
+end
+
+for target in $ADDITIONALS
+    wget -q -O - "$target" >> $TEMP_FILE
+    echo "" >> $TEMP_FILE
 end
 
 sd "$(echo -e "\xEF\xBB\xBF")" '' $TEMP_FILE
