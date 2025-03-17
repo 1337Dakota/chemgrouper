@@ -207,7 +207,13 @@ pub fn build_steps(graph: ChemGraph) -> String {
             }
         };
 
-        result.push(format!("{sep}{parts} parts of {name} {multiplier_format}"));
+		let parts_str = if parts > 1 {
+			format!("{parts} parts")
+		} else {
+			"1 part".to_owned()
+		};
+
+        result.push(format!("{sep}{parts_str} of {name} {multiplier_format}"));
     }
 
     result.join("\n")
